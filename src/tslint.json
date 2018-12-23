@@ -4,13 +4,13 @@
         "directive-selector": [
             true,
             "attribute",
-            "app",
+            "hdwallet",
             "camelCase"
         ],
         "component-selector": [
             true,
             "element",
-            "app",
+            "hdwallet",
             "kebab-case"
         ]
     }

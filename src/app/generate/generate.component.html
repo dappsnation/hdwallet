@@ -1,0 +1,44 @@
+<mat-horizontal-stepper linear #stepper>
+  <!-- First step : Display mnemonic -->
+  <mat-step>
+    <ng-template matStepLabel>Write those words down</ng-template>
+    <button mat-button (click)="randomMnemonic()">
+      <mat-icon>autorenew</mat-icon>
+      Generate new words
+    </button>
+    <mat-list>
+      <mat-list-item *ngFor="let word of mnemonic; let i = index">
+        {{ i + 1 }} - {{ word }}
+      </mat-list-item>
+    </mat-list>
+  </mat-step>
+  <!-- Second step : Validate 3 random words -->
+  <mat-step [stepControl]="testWordsForm">
+    <ng-template matStepLabel>Check words</ng-template>
+    <form [formGroup]="testWordsForm" fxLayout="column">
+      <ng-template matStepLabel>Fill out your name</ng-template>
+      <mat-form-field *ngFor="let test of testWords; let i = index">
+        <span matPrefix>{{ test.index + 1 }} &nbsp; </span>
+        <input matInput placeholder="Fill" [formControlName]="i" required />
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Third Step: Ask for a password -->
+  <mat-step>
+    <ng-template matStepLabel>Enter password</ng-template>
+    <form (ngSubmit)="createWallet()" [formGroup]="passwordForm" fxLayout="column">
+      <ng-template matStepLabel>Fill out your name</ng-template>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password" formControlName="pwd" required />
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Confirm" formControlName="confirm" required />
+      </mat-form-field>
+      <button type="submit" mat-button>Create Wallet</button>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
