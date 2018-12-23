@@ -198,10 +198,111 @@ private async encryptPrivatekey(password: string) {
 ## Display the Account
 Now that we've stored the keystore, we should display the address and the Ether balance to the user.
 
+### Login to a Wallet
+
+#### Store the current Wallet in a Service
+Create a service : 
+```bash
+ng generate service hdwallet
+```
+This service will store the Wallet object based on the `keystore` from the `localstorage` and the password (ask later to the user).
+
+```typescript
+import { Injectable } from '@angular/core';
+import { Wallet } from 'ethers';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HdwalletService {
+
+  public wallet: Wallet;
+
+  public async login(password: string) {
+    try {
+      const keystore = localStorage.getItem('keystore');
+      this.wallet = await Wallet.fromEncryptedJson(keystore, password);
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+}
+```
+
+#### Ask for the Password
+Let's create a component to ask the password of the user : 
+```bash
+ng generate component password
+```
+
+This page will be shown to the user only if the item "keystore" in the `localstorage` exists (we'll add routes and guards later).
+
+Inject the service into this component, login, and in case of success, navigate to the `display` route.
+
+```typescript
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { HdwalletService } from './../hdwallet.service';
+
+@Component({
+  selector: 'hdwallet-password',
+  templateUrl: './password.component.html',
+  styleUrls: ['./password.component.scss']
+})
+export class PasswordComponent {
+
+  constructor(
+    private service: HdwalletService,
+    private router: Router
+  ) { }
+
+  public async login(password: string) {
+    try {
+      await this.service.login(password);
+      this.router.navigate(['display']);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+```
+
 ### Display Component
-// TODO
+Create a new component:
+```bash
+ng generate component display
+```
+
+Let's keep it simple for now, the display component will only show the address: 
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { HdwalletService } from './../hdwallet.service';
+
+@Component({
+  selector: 'hdwallet-display',
+  templateUrl: './display.component.html',
+  styleUrls: ['./display.component.scss']
+})
+export class DisplayComponent implements OnInit {
+  public address: string;
+
+  constructor(private service: HdwalletService) { }
+
+  ngOnInit() {
+    this.address = this.service.wallet.address;
+  }
+
+}
+```
 
 #### Routes and Guards
+Now that we have all our components we can create the routes.
+
+By default the route will open the `PasswordComponent`. But if no `keystore` is found in the `localstorage`, the guard will navigate to `generate`.
+
+The `DisplayComponent` will only be opened if the `wallet` inside the service exists.
+
 // TODO
 
 #### Get the balance

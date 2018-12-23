@@ -1,4 +1,5 @@
 <mat-horizontal-stepper linear #stepper>
+
   <!-- First step : Display mnemonic -->
   <mat-step>
     <ng-template matStepLabel>Write those words down</ng-template>
@@ -12,6 +13,7 @@
       </mat-list-item>
     </mat-list>
   </mat-step>
+
   <!-- Second step : Validate 3 random words -->
   <mat-step [stepControl]="testWordsForm">
     <ng-template matStepLabel>Check words</ng-template>

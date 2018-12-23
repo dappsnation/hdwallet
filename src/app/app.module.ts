@@ -5,11 +5,15 @@ import { UiModule } from './ui/ui.module';
 import { AppComponent } from './app.component';
 import { GenerateComponent } from './generate/generate.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DisplayComponent } from './display/display.component';
+import { PasswordComponent } from './password/password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GenerateComponent
+    GenerateComponent,
+    DisplayComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,
