@@ -7,9 +7,9 @@ import { UiModule } from './ui/ui.module';
 import { AppRoutingModule } from './app.routing.module';
 // Components
 import { AppComponent } from './app.component';
-import { GenerateComponent } from './generate/generate.component';
-import { DisplayComponent } from './display/display.component';
-import { PasswordComponent } from './password/password.component';
+import { GenerateComponent } from './components/generate/generate.component';
+import { DisplayComponent } from './components/display/display.component';
+import { PasswordComponent } from './components/password/password.component';
 
 @NgModule({
   declarations: [
