@@ -297,15 +297,24 @@ export class DisplayComponent implements OnInit {
 ```
 
 #### Routes and Guards
-Now that we have all our components we can create the routes.
+Now that we have all our components we can create the routes:
 
-By default the route will open the `PasswordComponent`. But if no `keystore` is found in the `localstorage`, the guard will navigate to `generate`.
+- If has no keystore: `generate` (`GenerateComponent`)
+- If has keystore: `password` (`PasswordComponent`)
+- If has password: `display` (`DisplayComponent`)
 
-The `DisplayComponent` will only be opened if the `wallet` inside the service exists.
+```typescript
+const routes: Routes = [
+  { path: '', redirectTo: 'password', pathMatch: 'full' },
+  { path: 'password', component: PasswordComponent, canActivate: [HasKeystoreGuard] },
+  { path: 'display', component: DisplayComponent, canActivate: [HasPasswordGuard] },
+  { path: 'generate', component: GenerateComponent }
+];
+```
 
-// TODO
+> The `HasKeystoreGuard` will navigate to `generate` if no keystore has been found in the `localstorage`.
 
-#### Get the balance
+#### Display the balance
 // TODO
 
 ### Sign a Transaction
