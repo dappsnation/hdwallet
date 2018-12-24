@@ -130,12 +130,18 @@ Most of the users won't bother writting the mnemonic, but if they loose it, they
 In the next step, let's add a form to test 3 random words.
 
 ```typescript
-public createRandomWords() {
+/** Create a test for the mnemonic */
+public createTestWords(amount: number) {
   const mnemonic = [...this.mnemonic];
-  this.randomWords = Array(3).fill('').map(_ => {
-    const rand = Math.floor(Math.random() * mnemonic.length);
-    return mnemonic.splice(rand)[0];
-  });
+  this.testWords = Array(amount)
+    .fill('')
+    .map(_ => {
+      const rand = Math.floor(Math.random() * mnemonic.length);
+      const word = mnemonic.splice(rand)[0];
+      const index = this.mnemonic.indexOf(word);
+      return { word, index };
+    })
+    .sort((a, b) => a.index - b.index);
 }
 ```
 

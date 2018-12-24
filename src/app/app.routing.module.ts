@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 // Components
-import { PasswordComponent } from './password/password.component';
-import { GenerateComponent } from './generate/generate.component';
-import { DisplayComponent } from './display/display.component';
+import { PasswordComponent } from './components/password/password.component';
+import { GenerateComponent } from './components/generate/generate.component';
+import { DisplayComponent } from './components/display/display.component';
 // Guards
 import { HasPasswordGuard } from './guards/has-password.guard';
 import { HasKeystoreGuard } from './guards/has-keystore.guard';

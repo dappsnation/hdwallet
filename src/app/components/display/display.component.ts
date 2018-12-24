@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HdwalletService } from './../hdwallet.service';
+import { HdwalletService } from './../../hdwallet.service';
 
 @Component({
   selector: 'hdwallet-display',
