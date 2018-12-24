@@ -201,6 +201,8 @@ private async encryptPrivatekey(password: string) {
 }
 ```
 
+> The method `encrypt()` can take a long time. You may want to add a loading feedback.
+
 ## Display the Account
 Now that we've stored the keystore, we should display the address and the Ether balance to the user.
 
@@ -234,6 +236,8 @@ export class HdwalletService {
   }
 }
 ```
+
+> The method `fromEncryptedJson()` can take a long time. You may want to add a loading feedback.
 
 #### Ask for the Password
 Let's create a component to ask the password of the user : 

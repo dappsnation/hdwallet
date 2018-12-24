@@ -68,10 +68,11 @@ export class GenerateComponent implements OnInit {
 
   /** Check password and confirm are the same */
   public async createWallet() {
+    console.log(this.passwordForm.valid);
     if (this.passwordForm.valid) {
       const pwd = this.passwordForm.get('pwd').value;
       await this.encryptPrivatekey(pwd);
-      await this.service.login(pwd);
+      this.service.wallet = this.wallet;
       this.router.navigate(['display']);
     }
   }
