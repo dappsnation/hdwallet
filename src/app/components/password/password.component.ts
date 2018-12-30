@@ -31,6 +31,7 @@ export class PasswordComponent implements OnInit {
       this.router.navigate(['display']);
     } catch (err) {
       console.log(err);
+      this.router.navigate(['password']);
     }
   }
 }

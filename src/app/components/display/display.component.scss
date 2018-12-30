@@ -1,0 +1,13 @@
+:host {
+  height: 100%;
+  display: block;
+}
+
+mat-toolbar h1 {
+  text-transform: capitalize;
+}
+
+section {
+  height: calc(100% - 64px);
+  text-align: center;
+}

@@ -324,8 +324,44 @@ const routes: Routes = [
 
 > The `HasKeystoreGuard` will navigate to `generate` if no keystore has been found in the `localstorage`.
 
+### Connect to the network
+To interact with a netword we need to create a `provider`. It's a simple HTTPS connection to a node of the specific network. By default we will connect to the testnet "ropsten".
+
+In the service, update the `login()` method :
+```typescript
+public wallet: Wallet;
+public provider: ethers.providers.BaseProvider;
+
+public async login(password: string) {
+  try {
+    const keystore = localStorage.getItem('keystore');
+    this.provider = ethers.getDefaultProvider('ropsten');
+    const wallet = await Wallet.fromEncryptedJson(keystore, password);
+    this.wallet = wallet.connect(this.provider);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+```
+
 #### Display the balance
-// TODO
+Ethers are very large numbers (at least `10^18`). They are bigger than what a Javascript `number` can handle. Therefore we need to use a `BigNumber` library to deal with it. Then we convert to a `string` to display it.
+
+In `hdwallet.service`, add this method : 
+```typescript
+public async getBalance() {
+  const balance = await this.wallet.getBalance();
+  return balance.toString();
+}
+```
+
+We should call this method each time a transaction signed by this account has been mined. But if the user does a transaction outside of this wallet, we won't be updated.
+
+There are two solutions : 
+1. Listen on new block, and call this method again.
+2. Add a reload button that the user can trigger himself.
+
+I think the 1st solution would have the best UX, but would trigger too much useless network calls. The reload button will do the job.
 
 ### Sign a Transaction
 // TODO
