@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Wallet, ethers } from 'ethers';
+import { TransactionRequest } from 'ethers/providers';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,13 @@ export class HdwalletService {
 
   public async getBalance() {
     const balance = await this.wallet.getBalance();
-    return balance.toString();
+    return ethers.utils.formatEther(balance).toString();
+  }
+
+  public sendTx({ to, value }: TransactionRequest) {
+    return this.wallet.sendTransaction({
+      to,
+      value: ethers.utils.parseEther(value.toString())
+    });
   }
 }

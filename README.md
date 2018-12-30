@@ -351,9 +351,11 @@ In `hdwallet.service`, add this method :
 ```typescript
 public async getBalance() {
   const balance = await this.wallet.getBalance();
-  return balance.toString();
+  return ethers.utils.formatEther(balance).toString();
 }
 ```
+
+> The balance is in Wei. We first need to format is into Ethers before displaying it.
 
 We should call this method each time a transaction signed by this account has been mined. But if the user does a transaction outside of this wallet, we won't be updated.
 
@@ -363,8 +365,31 @@ There are two solutions :
 
 I think the 1st solution would have the best UX, but would trigger too much useless network calls. The reload button will do the job.
 
-### Sign a Transaction
-// TODO
+#### Send a Transaction
+Let's send some Ethers to another address. The method is very simple and require only two entries: 
+- `to`: The address you are sending the ethers to.
+- `value`: The amount of wei (10^18 ethers) to send.
+
+> You'll need to add some ethers to your account. Use a [faucet](https://faucet.ropsten.be/) for that.
+
+1. Add a `FormGroup` in the `DisplayComponent` ... 
+```typescript
+this.txForm = this.fb.group({
+  'to': ['', Validators.required],
+  'value': [0, Validators.required]
+});
+```
+
+2. Add a `sendTx()` method in the service :
+```typescript
+public sendTx({ to, value }: TransactionRequest) {
+  return this.wallet.sendTransaction({
+    to,
+    value: ethers.utils.parseEther(value.toString())
+  });
+}
+```
+We use the `parseEther()` method to transform Ethers into Weis.
 
 
 ## IPFS and Iframe

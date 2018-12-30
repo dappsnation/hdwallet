@@ -2,7 +2,18 @@
   <h1>{{ network.name }}</h1>
 </mat-toolbar>
 
-<section fxLayout="column" fxAlign="space-evenly center">
+<section fxLayout="column" fxLayoutAlign="space-evenly center">
   <h1>{{ balance }}Eth</h1>
   <span>{{ address }}</span>
+  <form (ngSubmit)="sendTx()" [formGroup]="txForm" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <h2>Send Ethers to</h2>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Recipent Address" formControlName="to" />
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" matInput placeholder="Amount" formControlName="value" />
+      <span matSuffix>Eth</span>
+    </mat-form-field>
+    <button type="submit" mat-raised-button>Send</button>
+  </form>
 </section>
