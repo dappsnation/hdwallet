@@ -390,15 +390,3 @@ public sendTx({ to, value }: TransactionRequest) {
 }
 ```
 We use the `parseEther()` method to transform Ethers into Weis.
-
-
-## IPFS and Iframe
-// TODO
-
-### Host with IPFS
-// TODO
-
-### Use inside an Iframe 
-// TODO
-
-
